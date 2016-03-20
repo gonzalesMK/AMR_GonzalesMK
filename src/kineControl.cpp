@@ -2,17 +2,17 @@
 #include <std_msgs/Float64.h>
 #include <geometry_msgs/Twist.h>
 
-    std_msgs::Float64 Vr;
-    std_msgs::Float64 Vl;
+    std_msgs::Float64 Wr;
+    std_msgs::Float64 Wl;
     ros::Publisher R_Motor;
     ros::Publisher L_Motor; 
 
 void callback(const geometry_msgs::TwistConstPtr& vel)
 {               
-        Vr.data = vel->linear.x + (0.35/2) * vel->angular.z ;
-        Vl.data = vel->linear.x - (0.35/2) * vel->angular.z ;
-        R_Motor.publish(Vr);
-        L_Motor.publish(Vl);        
+        Wr.data = (vel->linear.x)/0.35 + (vel->angular.z)/2 ;
+        Wl.data = (vel->linear.x)/0.35 - (vel->angular.z)/2 ;
+        R_Motor.publish(Wr);
+        L_Motor.publish(Wl);        
     
 }
 
@@ -24,7 +24,7 @@ int main( int argc, char **argv)
     
     R_Motor = node.advertise<std_msgs::Float64>("/vrep/vehicle/motorRightSpeed" , 1);   
     L_Motor = node.advertise<std_msgs::Float64>("/vrep/vehicle/motorLeftSpeed" , 1 );
-    ros::Subscriber s = node.subscribe("/sonarController",1, callback); 
-     
-    ros::spin();
+   //ros::Subscriber s = node.subscribe("/sonarController",1, callback); 
+     ros::Subscriber s = node.subscribe("/cmd_vel",1, callback); 
+     ros::spin();
 }   
