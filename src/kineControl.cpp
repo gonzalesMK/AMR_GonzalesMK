@@ -13,7 +13,7 @@ void callback(const geometry_msgs::TwistConstPtr& vel)
         Wl.data = (vel->linear.x)/0.35 - (vel->angular.z)/2 ;
         R_Motor.publish(Wr);
         L_Motor.publish(Wl);        
-    
+       
 }
 
 int main( int argc, char **argv)
@@ -24,7 +24,6 @@ int main( int argc, char **argv)
     
     R_Motor = node.advertise<std_msgs::Float64>("/vrep/vehicle/motorRightSpeed" , 1);   
     L_Motor = node.advertise<std_msgs::Float64>("/vrep/vehicle/motorLeftSpeed" , 1 );
-   //ros::Subscriber s = node.subscribe("/sonarController",1, callback); 
-     ros::Subscriber s = node.subscribe("/cmd_vel",1, callback); 
-     ros::spin();
+    ros::Subscriber s = node.subscribe("/kine",1, callback); 
+    ros::spin();
 }   
