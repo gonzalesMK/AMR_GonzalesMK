@@ -1,9 +1,9 @@
 #include <ros/ros.h>
-#include <std_msgs/Float64.h>
+#include <std_msgs/Float32.h>
 #include <geometry_msgs/Twist.h>
 
-    std_msgs::Float64 Wr;
-    std_msgs::Float64 Wl;
+    std_msgs::Float32 Wr;
+    std_msgs::Float32 Wl;
     ros::Publisher R_Motor;
     ros::Publisher L_Motor; 
 
@@ -22,8 +22,8 @@ int main( int argc, char **argv)
     
     ros::NodeHandle node;
     
-    R_Motor = node.advertise<std_msgs::Float64>("/vrep/vehicle/motorRightSpeed" , 1);   
-    L_Motor = node.advertise<std_msgs::Float64>("/vrep/vehicle/motorLeftSpeed" , 1 );
-    ros::Subscriber s = node.subscribe("/kine",1, callback); 
+    R_Motor = node.advertise<std_msgs::Float32>("/vrep/vehicle/motorRightSpeed" , 1);   
+    L_Motor = node.advertise<std_msgs::Float32>("/vrep/vehicle/motorLeftSpeed" , 1 );
+    ros::Subscriber s = node.subscribe("/sonarController",1, callback); 
     ros::spin();
 }   
